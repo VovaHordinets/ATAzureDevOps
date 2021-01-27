@@ -32,15 +32,12 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-- task: DotNetCoreCLI@2
+
+- task: VSTest@2
   inputs:
-    command: 'custom'
-    projects: '**/NUnitTestRozetka.dll'
-    custom: 'vstest'
-    arguments: '--logger:trx;logfilename=TEST.xml'
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit'
-    testResultsFiles: '**/TEST.xml'
-    mergeTestResults: true
-    testRunTitle: 'SeleniumTest'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
