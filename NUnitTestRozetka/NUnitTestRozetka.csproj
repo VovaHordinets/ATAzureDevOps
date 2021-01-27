@@ -6,6 +6,7 @@
     <IsPackable>false</IsPackable>
     <PublishChromeDriver>true</PublishChromeDriver>
     <NoWin32Manifest>true</NoWin32Manifest>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
