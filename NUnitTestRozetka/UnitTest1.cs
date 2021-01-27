@@ -1,21 +1,29 @@
 using NUnit.Framework;
-using System;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace NUnitTestRozetka
 {
     public class Tests
     {
         IWebDriver driver;
+        ChromeOptions chromeOptions = new ChromeOptions();
         [OneTimeSetUp]
         public void Setup()
         {
-         driver = new ChromeDriver();
+         driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),chromeOptions);
          driver.Navigate().GoToUrl(" https://rozetka.com.ua/ua/");
          driver.Manage().Window.Maximize();
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
         }
         public int returnPrice(string textElement)
         {
@@ -33,7 +41,7 @@ namespace NUnitTestRozetka
             IWebElement searchInput = wait.Until(e => e.FindElement(By.Name("search")));
             if (tearDown == false)
             {
-                string searchRequest = "dell vostro 14 3491";
+                string searchRequest = "dell xps 15 9500";
                 searchInput.SendKeys(searchRequest);
             }
             else
@@ -43,7 +51,6 @@ namespace NUnitTestRozetka
         }
 
         [Test]
-        [Repeat(20)]
         public void ComparePrices()
         {
             writeRequest();
